@@ -11,6 +11,11 @@ The dashboard leverages a fully serverless architecture to analyze **2024 Britis
 
 ### Screenshots
 
+![SS1](frontend/screenshots/f1-1.png)
+![SS1](frontend/screenshots/f1-2.png)
+![SS1](frontend/screenshots/f1-3.png)
+![SS1](frontend/screenshots/f1-4.png)
+
 ### Key Features
 
 - **🏎️ Dynamic Race Strategy:** Interactive visualization of lap-by-lap tire compound evolution (Soft, Medium, Hard, Inter, Wet). Clearly displays how strategy shifts during the race, especially in changing weather conditions.
