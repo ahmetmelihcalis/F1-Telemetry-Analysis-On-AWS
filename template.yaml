@@ -63,6 +63,13 @@ Resources:
         AllowHeaders: "'Content-Type'"
         AllowOrigin: "'*'"
 
+      # Throttling (Rate Limiting) - Safety Valve 🛡️
+      MethodSettings:
+        - ResourcePath: "/*"
+          HttpMethod: "*"
+          ThrottlingBurstLimit: 10
+          ThrottlingRateLimit: 5
+
   # ---------------------------------------------------------
   # S3 Bucket (Frontend Hosting)
   # ---------------------------------------------------------
