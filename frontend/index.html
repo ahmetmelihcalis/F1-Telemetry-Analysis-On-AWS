@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Telemetry Dashboard | 2024 Season</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">F1</div>
+            <div class="logo-text">
+                <h1>Telemetry Dashboard</h1>
+                <span id="race-subtitle">British Grand Prix 2024 • Silverstone</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Laps</div>
+                <div class="stat-value" id="total-laps">52</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Fastest Lap</div>
+                <div class="stat-value highlight" id="fastest-lap">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Anomaly Laps</div>
+                <div class="stat-value" id="anomaly-count">--</div>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <div class="card">
+                <div class="card-header">
+                    <span class="icon"></span>
+                    <span class="card-title">Race Strategy - Lap Times</span>
+                </div>
+
+                <div class="tooltip-hint">
+                    <strong>Tip:</strong> Click on a point to view detailed telemetry data.
+                </div>
+
+                <div class="driver-chips" id="driver-chips"></div>
+
+                <div class="card-body">
+                    <div class="chart-container" id="strategy-chart-container">
+                        <div class="loading-overlay" id="strategy-loading">
+                            <div class="spinner"></div>
+                            <div class="loading-text">Loading...</div>
+                        </div>
+                        <canvas id="strategyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <span class="legend-title">Tyres:</span>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--tire-soft)"></div>
+                        <span>Soft</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--tire-medium)"></div>
+                        <span>Medium</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--tire-hard)"></div>
+                        <span>Hard</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--tire-inter)"></div>
+                        <span>Inter</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--tire-wet)"></div>
+                        <span>Wet</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <div class="leaderboard-header">Race Results</div>
+                <div class="leaderboard-list" id="leaderboard-list">
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="fastest-lap-info" id="fastest-lap-info" style="display: none;">
+            <div class="icon"></div>
+            <div class="details">
+                <div class="driver-name" id="fastest-driver">--</div>
+                <div style="font-size: 0.875rem; opacity: 0.9;">Fastest Lap</div>
+            </div>
+            <div class="lap-time" id="fastest-time">--</div>
+        </div>
+
+        <div class="card comparison-section">
+            <div class="card-header">
+                <div class="card-title">
+                    <div class="icon"></div>
+                    Driver Comparison
+                </div>
+            </div>
+            <div class="comparison-controls">
+                <select id="driver1-select">
+
+                </select>
+                <span class="vs-text">VS</span>
+                <select id="driver2-select">
+                </select>
+                <button class="compare-btn" onclick="compareDrivers()">Compare</button>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" id="comparison-chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <section class="telemetry-section" id="telemetry-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="icon"></div>
+                        Detailed Telemetry Analysis
+                    </div>
+                    <button class="close-btn" onclick="closeTelemetry()">Close</button>
+                </div>
+
+                <div class="telemetry-header" style="padding: 1rem 1.5rem;">
+                    <div class="telemetry-info" id="telemetry-info">
+                    </div>
+                </div>
+
+                <div class="telemetry-grid" style="padding: 0 1.5rem 1.5rem;">
+                    <div class="chart-container small">
+                        <div class="loading-overlay" id="speed-loading">
+                            <div class="spinner"></div>
+                            <div class="loading-text">Loading telemetry data...</div>
+                        </div>
+                        <canvas id="speedChart"></canvas>
+                    </div>
+                    <div class="chart-container small">
+                        <canvas id="rpmChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

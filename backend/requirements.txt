@@ -1,0 +1,4 @@
+# No external dependencies (using standard library only)
+# requests
+# pandas
+# numpy

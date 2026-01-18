@@ -1,0 +1,111 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  F1 Telemetry Dashboard - AWS Serverless Application
+  Real-time Silverstone 2024 telemetry analysis with Lambda + API Gateway
+
+# ============================================================
+# GLOBAL SETTINGS
+# ============================================================
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 256
+    Runtime: python3.12
+
+# ============================================================
+# RESOURCES
+# ============================================================
+Resources:
+
+  # ---------------------------------------------------------
+  # Lambda Function
+  # ---------------------------------------------------------
+  F1TelemetryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: f1-telemetry-api
+      Description: Lambda function to fetch/process OpenF1 data
+      CodeUri: backend/
+      Handler: lambda_function.lambda_handler
+      
+      # API Gateway Events
+      Events:
+        # GET / endpoint
+        TelemetryApi:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+            RestApiId: !Ref F1TelemetryApi
+        
+        # OPTIONS / (CORS preflight)
+        TelemetryOptions:
+          Type: Api
+          Properties:
+            Path: /
+            Method: OPTIONS
+            RestApiId: !Ref F1TelemetryApi
+
+  # ---------------------------------------------------------
+  # API Gateway
+  # ---------------------------------------------------------
+  F1TelemetryApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: f1-telemetry-api
+      StageName: prod
+      Description: F1 Telemetry Dashboard API
+      
+      # CORS Settings
+      Cors:
+        AllowMethods: "'GET, OPTIONS'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
+
+  # ---------------------------------------------------------
+  # S3 Bucket (Frontend Hosting)
+  # ---------------------------------------------------------
+  FrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'f1-telemetry-frontend-${AWS::AccountId}'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  # S3 Bucket Policy (Public Read)
+  FrontendBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref FrontendBucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Sub '${FrontendBucket.Arn}/*'
+
+# ============================================================
+# OUTPUTS
+# ============================================================
+Outputs:
+  
+  # API Endpoint URL
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub 'https://${F1TelemetryApi}.execute-api.${AWS::Region}.amazonaws.com/prod/'
+  
+  # Frontend Website URL
+  WebsiteURL:
+    Description: S3 Static Website URL
+    Value: !GetAtt FrontendBucket.WebsiteURL
+  
+  # Lambda ARN
+  FunctionArn:
+    Description: Lambda Function ARN
+    Value: !GetAtt F1TelemetryFunction.Arn
