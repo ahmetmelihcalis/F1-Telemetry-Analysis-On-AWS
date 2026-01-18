@@ -12,9 +12,9 @@ The dashboard leverages a fully serverless architecture to analyze **2024 Britis
 ### Screenshots
 
 ![SS1](frontend/screenshots/f1-1.png)
-![SS1](frontend/screenshots/f1-2.png)
-![SS1](frontend/screenshots/f1-3.png)
-![SS1](frontend/screenshots/f1-4.png)
+![SS2](frontend/screenshots/f1-2.png)
+![SS3](frontend/screenshots/f1-3.png)
+![SS4](frontend/screenshots/f1-4.png)
 
 ### Key Features
 
@@ -36,11 +36,12 @@ The dashboard leverages a fully serverless architecture to analyze **2024 Britis
 The project architecture is built entirely on a modern **Serverless** foundation, prioritizing scalability and ease of management.
 
 - **Infrastructure as Code (IaC):** Deployed using **AWS SAM**.
-- **Cost Optimization:** The Python backend uses standard libraries only (`urllib`, `statistics`, `math`) to keep the Lambda deployment package small and cold starts fast.
+- **Cold Start Optimization:** Standard Python libraries (`urllib`, `statistics`, `math`) are used instead of heavier alternatives like `pandas` or `numpy` to minimize deployment package size and ensure faster Lambda execution.
 
 > **Design Philosophy:** While a simple Python script could handle this specific dataset, this project **deliberately adopts a complex, scalable serverless architecture** to demonstrate enterprise-grade cloud patterns and high-availability simulations.
 
-### 🛠️ Quick Start
+### Quick Start
+
 
 #### Prerequisites
 - **AWS CLI** & **AWS SAM CLI** installed and configured.
@@ -101,11 +102,11 @@ Proje, **2024 Britanya Grand Prix** verilerini kullanarak tamamen sunucusuz (ser
 Proje, modern bulut standartlarına uygun olarak, ölçeklenebilir ve yönetimi kolay bir **Serverless** altyapı üzerine kurgulanmıştır.
 
 - **Infrastructure as Code (IaC):** **AWS SAM** kullanılarak dağıtılmıştır.
-- **Maliyet Optimizasyonu:** Python backend sadece standart kütüphaneleri (`urllib`, `statistics`, `math`) kullanır. `pandas` veya `numpy` gibi ağır kütüphaneler kullanılmamıştır, bu sayede Lambda paketi küçük kalır ve açılış (cold start) süresi hızlanır.
+- **Cold Start Optimizasyonu:** `pandas` veya `numpy` yerine standart Python kütüphaneleri (`urllib`, `statistics`, `math`) kullanılarak paket boyutu küçültülmüş ve Lambda fonksiyonunun başlatma süresi (cold start) minimize edilmiştir.
 
 > **Tasarım Felsefesi:** Bu proje için **standart bir Python uygulaması** yeterli olabilecekken, kurumsal ölçekte bulut desenlerini ve yüksek erişilebilirlik senaryolarını simüle etmek amacıyla **bilinçli olarak** bu kapsamlı mimari tercih edilmiştir.
 
-### 🛠️ Kurulum ve Hızlı Başlangıç
+### Kurulum ve Hızlı Başlangıç
 
 #### Ön Gereksinimler
 - **AWS CLI** ve **AWS SAM CLI** yüklü ve yapılandırılmış olmalıdır.
