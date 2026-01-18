@@ -45,15 +45,19 @@ TIRE_COLORS = {
 }
 
 
-def fetch_json(url: str) -> list[dict[str, Any]]:
-    """Fetch JSON from URL using standard library."""
-    try:
-        with urllib.request.urlopen(url, timeout=30) as response:
-            data = response.read().decode('utf-8')
-            return json.loads(data)
-    except Exception as e:
-        print(f"API Hatası: {e}")
-        return []
+def fetch_json(url: str, retries: int = 2) -> list[dict[str, Any]]:
+    """Fetch JSON from URL using standard library with retry."""
+    for attempt in range(retries + 1):
+        try:
+            with urllib.request.urlopen(url, timeout=5) as response:
+                data = response.read().decode('utf-8')
+                return json.loads(data)
+        except Exception as e:
+            if attempt == retries:
+                print(f"API Error: {e} - URL: {url}")
+                return []
+            time.sleep(0.5)  # Wait before retry
+    return []
 
 
 def calculate_z_score(values: list[float]) -> tuple[float, float]:
@@ -85,7 +89,7 @@ def get_summary_data() -> dict[str, Any]:
     # Fetch data for each driver
     for i, driver_number in enumerate(TOP_10_DRIVERS):
         if i > 0:
-            time.sleep(0.5)  # Rate limit prevention
+            time.sleep(0.1)  # Reduce rate limit sleep to save time for AWS timeout
         
         driver_url = f"{OPENF1_BASE}/drivers?session_key={SESSION_KEY}&driver_number={driver_number}"
         driver_data = fetch_json(driver_url)
