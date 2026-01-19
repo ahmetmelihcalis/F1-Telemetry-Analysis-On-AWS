@@ -15,6 +15,7 @@ The dashboard leverages a fully serverless architecture to analyze **2024 Britis
 ![SS2](frontend/screenshots/f1-2.png)
 ![SS3](frontend/screenshots/f1-3.png)
 ![SS4](frontend/screenshots/f1-4.png)
+![SS5](frontend/screenshots/f1-5.png)
 
 ### Key Features
 
@@ -76,7 +77,7 @@ sam deploy --guided
 <a name="türkçe"></a>
 ## Türkçe
 
-**AWS Serverless (SAM, Lambda, API Gateway) ile güçlendirilmiş, 2024 Britanya GP telemetri verilerini görselleştiren profesyonel bir F1 analiz paneli.**
+**AWS Serverless (SAM, Lambda, API Gateway) ile güçlendirilmiş, 2024 Britanya GP telemetri verilerini görselleştiren bir F1 analiz paneli.**
 
 > **Not:** Bu çalışma, **veri işleme** ve **bulut teknolojileri** (AWS) yetkinliklerini geliştirmek amacıyla hazırlanan deneysel bir projedir.
 
