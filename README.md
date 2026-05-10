@@ -1,8 +1,5 @@
 # F1 Telemetry Analysis On AWS: 2024 British GP 🏎️ 
 
-<a name="english"></a>
-## English
-
 **A production-grade F1 analytics dashboard powered by AWS Serverless (SAM, Lambda, API Gateway) visualizing the 2024 British GP telemetry.**
 
 > **Note:** This is an experimental project designed to gain hands-on experience with **data processing** and **cloud technologies** (AWS).
@@ -71,68 +68,3 @@ sam deploy --guided
 1. Follow the interactive prompts.
 2. Copy the **API Endpoint URL** from the output.
 3. Update `const API_BASE` in `frontend/app.js` with this new URL.
-
----
-
-<a name="türkçe"></a>
-## Türkçe
-
-**AWS Serverless (SAM, Lambda, API Gateway) ile güçlendirilmiş, 2024 Britanya GP telemetri verilerini görselleştiren bir F1 analiz paneli.**
-
-> **Not:** Bu çalışma, **veri işleme** ve **bulut teknolojileri** (AWS) yetkinliklerini geliştirmek amacıyla hazırlanan deneysel bir projedir.
-
-Proje, **2024 Britanya Grand Prix** verilerini kullanarak tamamen sunucusuz (serverless) bir mimari üzerinde çalışır. Kullanıcılara lastik stratejilerini (Kuru/Islak zemin geçişleri) ve detaylı araç telemetrisini (Hız, Devir, Vites) analiz etme imkanı sunar.
-
-### Temel Özellikler
-
-- **🏎️ Dinamik Yarış Stratejisi:** Tur bazlı lastik hamuru değişiminin (Yumuşak, Orta, Sert, Geçiş, Yağmur) interaktif görselleştirmesi. Yarış içindeki strateji değişimlerini ve hava koşullarına tepkileri net bir şekilde gösterir.
-- **🧠 İstatistiksel Anomali Tespiti:** Z-Score analizi kullanarak sıra dışı tur zamanlarını otomatik olarak tespit eder ve işaretler. Pit stopları, pist olaylarını veya ani performans düşüşlerini (> 2.5 sigma sapma) anında vurgular.
-- **📉 Detaylı Telemetri Analizi:** Her bir tur için granüler veri analizi sunar. Kullanıcılar, pilot performansını anlamak için Hız (km/h), Motor Devri (RPM) ve Vites değişimleri gibi yüksek frekanslı verileri inceleyebilir.
-- **☁️ Serverless Mimari:** Tamamen AWS Lambda ve API Gateway üzerine kurulmuştur. Bu yapı, boşta bekleme maliyetlerini (idle cost) ortadan kaldırır ve uygulamanın trafik arttığında otomatik olarak ölçeklenmesini sağlar.
-
-### Kullanılan Teknolojiler
-
-- **AWS:** SAM, Lambda, API Gateway
-- **Backend:** Python
-- **Frontend:** HTML, CSS, JavaScript
-- **Görselleştirme:** Chart.js
-- **Veri:** OpenF1 API
-
-### Mimari
-
-Proje, modern bulut standartlarına uygun olarak, ölçeklenebilir ve yönetimi kolay bir **Serverless** altyapı üzerine kurgulanmıştır.
-
-- **Infrastructure as Code (IaC):** **AWS SAM** kullanılarak dağıtılmıştır.
-- **Cold Start Optimizasyonu:** `pandas` veya `numpy` yerine standart Python kütüphaneleri (`urllib`, `statistics`, `math`) kullanılarak paket boyutu küçültülmüş ve Lambda fonksiyonunun başlatma süresi (cold start) minimize edilmiştir.
-
-> **Tasarım Felsefesi:** Bu proje için **standart bir Python uygulaması** yeterli olabilecekken, kurumsal ölçekte bulut desenlerini ve yüksek erişilebilirlik senaryolarını simüle etmek amacıyla **bilinçli olarak** bu kapsamlı mimari tercih edilmiştir.
-
-### Kurulum ve Hızlı Başlangıç
-
-#### Ön Gereksinimler
-- **AWS CLI** ve **AWS SAM CLI** yüklü ve yapılandırılmış olmalıdır.
-- **Python 3.12+** yüklü olmalıdır.
-
-#### 1. Projeyi İndirme
-```bash
-git clone https://github.com/ahmetmelihcalis/F1-Telemetry-Analysis-On-AWS.git
-cd F1-Telemetry-Analysis-On-AWS
-```
-
-#### 2. Yerel Geliştirme (Local Test)
-AWS'ye yüklemeden kodu bilgisayarınızda test etmek için:
-```bash
-cd backend
-python local_server.py
-```
-Yerel sunucu `http://localhost:8000` adresinde çalışacaktır. `frontend/index.html` dosyasını tarayıcınızda açarak paneli kullanabilirsiniz.
-
-#### 3. AWS'ye Dağıtım (Deploy)
-API Gateway ve Lambda fonksiyonunu AWS hesabınıza kurmak için:
-```bash
-sam build
-sam deploy --guided
-```
-1. Ekrana gelen soruları cevaplayın.
-2. Çıktıdaki **API Endpoint URL** adresini kopyalayın.
-3. `frontend/app.js` dosyasındaki `const API_BASE` değişkenini bu yeni URL ile güncelleyin.
